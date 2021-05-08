@@ -53,8 +53,8 @@ export default {
   },
   computed: {
     iconClassName() {
-      return this.toggle ? 'el-icon-s-fold' : 'el-icon-s-unfold'
-    }
+      return this.toggle ? "el-icon-s-fold" : "el-icon-s-unfold";
+    },
     /*code: {
       get: function () {
         return this.$store.state.componentData

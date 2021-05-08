@@ -1,8 +1,6 @@
 <template>
   <div class="vl-layout">
-    <nav class="vl-nav">
-      <div class="vl-nav__main">VVL</div>
-    </nav>
+    <vl-nav></vl-nav>
     <div class="vl-layout__main">
       <LeftSide />
       <Main />
@@ -36,17 +34,6 @@ export default {
   .vl-layout__main {
     display: flex;
     flex-grow: 1;
-  }
-}
-.vl-nav {
-  width: 100%;
-  height: 44px;
-  border-bottom: 1px solid #dee2e6;
-  .vl-nav__main {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    padding: 0 44px;
   }
 }
 </style>

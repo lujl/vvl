@@ -22,7 +22,7 @@
         </el-tabs>
       </div>
     </div>
-    
+
     <h3>结构层级</h3>
     <ComponentTree />
   </vl-side>
