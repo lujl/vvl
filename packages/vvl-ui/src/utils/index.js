@@ -1,5 +1,10 @@
 import dedent from "dedent";
 
+let uid = 0;
+export function getUID() {
+  return ++uid;
+}
+
 export function toVue(componentData, isPreviewCode = true) {
   let defineData = {};
 
@@ -148,4 +153,15 @@ export function find(arr, args, children = "children") {
     }
   }
   return target;
+}
+
+export function each(arr, cb, children = "children") {
+  if (!isArray(arr)) return;
+  arr.forEach((item) => {
+    if (item.children) {
+      each(item.children, cb, children);
+    } else {
+      cb(item);
+    }
+  });
 }

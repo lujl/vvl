@@ -29,11 +29,10 @@
 </template>
 <script>
 //import ElementUI from "element-ui";
+import { getUID } from "@/utils/index.js";
 import { componetsList } from "@/data.js";
 
 import ComponentTree from "./ComponentTree.vue";
-
-let uid = 0;
 
 export default {
   components: {
@@ -49,10 +48,10 @@ export default {
   methods: {
     handlePushComponents(item) {
       let newItem = { ...item };
-      newItem.id = ++uid;
+      newItem.id = getUID();
       if (newItem.children && Array.isArray(newItem.children)) {
         newItem.children.forEach((childItem) => {
-          childItem.id = ++uid;
+          childItem.id = getUID();
         });
       }
       this.$store.commit("COMPONENTS_PUSH", newItem);

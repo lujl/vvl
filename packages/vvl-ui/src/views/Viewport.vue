@@ -56,7 +56,7 @@ export default {
       if (componentNode) {
         let target = componentNode.getBoundingClientRect();
         let sideWidth = 200;
-        let headHeight = 40;
+        let headHeight = 44;
         this.$store.commit("COMPONENTS_ACTIVE", {
           id: componentNode.dataset.id,
           name: componentNode.dataset.name,

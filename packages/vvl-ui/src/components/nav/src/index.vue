@@ -3,7 +3,11 @@
     <div class="vl-nav__main">
       <h1 class="vl-nav__logo">VVL</h1>
       <div class="vl-nav__fn">
-        <i class="vl-nav__icon el-icon-full-screen" @click="onFullScreen" title="全屏"></i>
+        <i
+          class="vl-nav__icon el-icon-full-screen"
+          @click="onFullScreen"
+          title="全屏"
+        ></i>
         <i class="vl-nav__icon el-icon-download" title="下载"></i>
       </div>
     </div>

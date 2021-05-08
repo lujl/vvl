@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { toVue, parseVue } from "@/utils/index.js";
+import { toVue, parseVue, getUID } from "@/utils/index.js";
 
 import prettier from "prettier/standalone";
 import parserHtml from "prettier/parser-html";
@@ -117,7 +117,6 @@ export default {
       download("hello.vue", this.code);
     },
     templateToJSON(html) {
-      let uid = 0;
       let el = document.createElement("div");
       el.innerHTML = html;
       function toData(arr) {
@@ -134,7 +133,7 @@ export default {
           });
           let obj = {
             name: item.nodeName.toLocaleLowerCase(),
-            id: ++uid,
+            id: getUID(),
             text: item.textContent,
             attrs: attrs,
           };

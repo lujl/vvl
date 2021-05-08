@@ -16,7 +16,7 @@ export default new Vuex.Store({
       state.componentData.push(value);
     },
     COMPONENTS_ACTIVE(state, value) {
-      if (!value.attrs) {
+      if (!value.attrs && value.id) {
         //let target = find(state.componentData, value.id)
         let componentData = deepClone(state.componentData);
         let target = find(componentData, function (item) {
