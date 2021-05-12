@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import { find, deepClone } from "@/utils/index.js";
+import { broadcast, transfer } from 'vuex-iframe-sync'
 
 Vue.use(Vuex);
 
@@ -8,6 +9,7 @@ export default new Vuex.Store({
   state: {
     componentData: [],
     activeComponent: {},
+    style: "",
     script: "",
   },
   mutations: {
@@ -33,6 +35,11 @@ export default new Vuex.Store({
     },
     SCRIPT_SAVE(state, value) {
       state.script = value;
+      console.log("SCRIPT_SAVE", value);
+    },
+    STYLE_SAVE(state, value) {
+      state.style = value;
+      console.log("STYLE_SAVE", value);
     },
   },
   actions: {
@@ -41,4 +48,7 @@ export default new Vuex.Store({
     },*/
   },
   modules: {},
+  plugins: [
+    window === window.top ? broadcast('viewport-iframe') : transfer()
+  ]
 });

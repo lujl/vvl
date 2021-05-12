@@ -1,7 +1,6 @@
 <template>
   <div class="main" :class="{ toggle }">
-    <!-- <TreeComponent :data="componentData" /> -->
-    <Viewport />
+    <iframe src="/viewport" class="main__iframe" id="viewport-iframe"></iframe>
 
     <CodeEditor :toggle.sync="toggle" />
 
@@ -9,15 +8,12 @@
   </div>
 </template>
 <script>
-//import TreeComponent from "./TreeComponent.vue";
-import Viewport from "./Viewport.vue";
 import CodeEditor from "./CodeEditor.vue";
 import Selected from "./Selected.vue";
 
 export default {
   name: "Main",
   components: {
-    Viewport,
     CodeEditor,
     Selected,
   },
@@ -37,6 +33,12 @@ export default {
   background-color: #f8f9fa;
   border-left: 1px solid #dee2e6;
   border-right: 1px solid #dee2e6;
+  .main__iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    overflow-y: auto;
+  }
 }
 .main.toggle {
   padding-bottom: 336px;

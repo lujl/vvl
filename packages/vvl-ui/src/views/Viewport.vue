@@ -14,17 +14,21 @@ export default {
       html: "",
       js: "",
       css: "",
+      styleId: Date.now(),
     };
   },
   watch: {
     "$store.state.componentData": {
       handler: function (val) {
-        this.code = toVue(val, false);
+        this.code = toVue(
+          {
+            componentData: val,
+            style: this.$store.state.style,
+          },
+          false
+        );
         this.destroyCode();
         this.renderCode();
-
-        //console.log('1A', this.$store.state.activeComponent)
-        //this.updateSelectedEl()
       },
       immediate: false,
     },
@@ -55,16 +59,14 @@ export default {
       let componentNode = this.getComponentNode(e.target);
       if (componentNode) {
         let target = componentNode.getBoundingClientRect();
-        let sideWidth = 200;
-        let headHeight = 44;
         this.$store.commit("COMPONENTS_ACTIVE", {
           id: componentNode.dataset.id,
           name: componentNode.dataset.name,
           style: {
             width: target.width + "px",
             height: target.height + "px",
-            left: target.left - sideWidth + "px",
-            top: target.top + window.pageYOffset - headHeight + "px",
+            left: target.left + "px",
+            top: target.top + window.pageYOffset + "px",
           },
         });
       }
@@ -87,8 +89,6 @@ export default {
       this.js = script;
       this.css = style;
       this.html = template;
-
-      console.log("html:", this.html, "css:", this.css, "js:", this.js);
     },
     renderCode() {
       this.splitCode();
@@ -101,13 +101,23 @@ export default {
         this.component = new Component().$mount();
         //console.log(this.component)
 
+        //渲染样式
+        if (this.css !== "") {
+          const style = document.createElement("style");
+          style.type = "text/css";
+          style.id = this.styleId;
+          style.innerHTML = this.css;
+          document.getElementsByTagName("head")[0].appendChild(style);
+        }
         this.$refs.display.appendChild(this.component.$el);
       }
     },
     destroyCode() {
-      //const $target = document.getElementById(this.id);
-      //if ($target) $target.parentNode.removeChild($target);
+      //移除样式
+      const $target = document.getElementById(this.styleId);
+      if ($target) $target.parentNode.removeChild($target);
 
+      //移除组件
       if (this.component) {
         this.$refs.display.removeChild(this.component.$el);
         this.component.$destroy();
@@ -120,9 +130,3 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-#viewport {
-  height: 100%;
-  overflow-y: auto;
-}
-</style>

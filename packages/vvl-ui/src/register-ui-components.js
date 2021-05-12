@@ -3,8 +3,7 @@ import Nav from "@/components/nav";
 
 const components = [Side, Nav];
 
-const install = function (Vue, opts = {}) {
-  console.log(opts);
+const install = function (Vue) {
   components.forEach((component) => {
     Vue.component(component.name, component);
   });

@@ -67,8 +67,10 @@ export default {
   watch: {
     "$store.state.componentData": {
       handler: function (val) {
-        //this.code = toVue(val)
-        let code = toVue(val);
+        let code = toVue({
+          componentData: val,
+          style: this.$store.state.style,
+        });
         this.code = prettier.format(code, {
           parser: "vue",
           plugins: [parserHtml],
@@ -93,7 +95,9 @@ export default {
       let result = this.templateToJSON(template);
 
       const script = parseVue(this.code, "script");
+      const style = parseVue(this.code, "style", false);
       this.$store.commit("SCRIPT_SAVE", script);
+      this.$store.commit("STYLE_SAVE", style);
       this.$store.commit("COMPONENTS_UPDATE", result);
     },
     //下载

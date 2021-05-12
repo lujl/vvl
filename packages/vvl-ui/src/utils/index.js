@@ -5,17 +5,13 @@ export function getUID() {
   return ++uid;
 }
 
-export function toVue(componentData, isPreviewCode = true) {
+export function toVue({ componentData, style }, isPreviewCode = true) {
   let defineData = {};
-
+  let styleCode = style || '<style lang="scss" scoped></style>';
   // 获取属性值
   function getAttrVal(val) {
     return typeof val == "object" ? val.value : val;
   }
-  // 属性是否为布尔型
-  /*function attrBoolean(key, val) {
-    return isBoolean(val) ? (val ? " " + key : "") : ` ${key}="${val}"`;
-  }*/
   function getAttr(key, val) {
     if (isBoolean(val)) {
       return val ? " " + key : "";
@@ -78,21 +74,26 @@ export function toVue(componentData, isPreviewCode = true) {
                 }
                 ${"</script>"}
 
-                <style lang="scss" scoped></style>
+                ${styleCode}
                 `;
 }
 
-export function parseVue(source, type) {
+export function parseVue(source, type, matchResult = true) {
   const regex = new RegExp(`<${type}[^>]*>`);
   let openingTag = source.match(regex);
 
   if (!openingTag) return "";
   else openingTag = openingTag[0];
 
-  return source.slice(
-    source.indexOf(openingTag) + openingTag.length,
-    source.lastIndexOf(`</${type}>`)
-  );
+  return matchResult
+    ? source.slice(
+        source.indexOf(openingTag) + openingTag.length,
+        source.lastIndexOf(`</${type}>`)
+      )
+    : source.slice(
+        source.indexOf(openingTag),
+        source.lastIndexOf(`</${type}>`) + openingTag.length
+      );
 }
 
 export function isString(val) {
