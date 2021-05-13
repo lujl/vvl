@@ -20,6 +20,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
+import { getIframeNodeById } from "@/utils/index.js";
 
 export default {
   name: "ComponentTree",
@@ -38,20 +39,8 @@ export default {
   },
   methods: {
     handleNodeClick(node) {
-      this.$store.commit("COMPONENTS_ACTIVE", {
-        id: node.id,
-        name: node.name,
-        //attrs: node.attrs
-      });
-      /*let elBoundingClientRect = this.$refs[
-        node.id
-      ][0].$el.getBoundingClientRect();
-      this.$store.commit("COMPONENTS_ACTIVE", {
-        width: elBoundingClientRect.width + "px",
-        height: elBoundingClientRect.height + "px",
-        left: elBoundingClientRect.left - 201 + "px",
-        top: elBoundingClientRect.top - 84 + "px"
-      });*/
+      let currentNode = getIframeNodeById(node.id);
+      this.$store.dispatch("SET_COMPONENTS_ACTIVE", currentNode);
     },
     handleDragStart(node, ev) {
       console.log("drag start", node, ev);

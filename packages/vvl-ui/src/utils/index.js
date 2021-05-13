@@ -78,6 +78,20 @@ export function toVue({ componentData, style }, isPreviewCode = true) {
                 `;
 }
 
+// 获取组件节点
+export function getComponentNode(node) {
+  while (node.id !== "app" && !node.dataset.id) {
+    node = node.parentNode;
+  }
+  return node.id == "app" ? "" : node;
+}
+
+export function getIframeNodeById(id) {
+  let iframeDoc = document.getElementById("viewport-iframe").contentWindow
+    .document;
+  return iframeDoc.querySelector(`[data-id='${id}']`);
+}
+
 export function parseVue(source, type, matchResult = true) {
   const regex = new RegExp(`<${type}[^>]*>`);
   let openingTag = source.match(regex);

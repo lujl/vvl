@@ -34,49 +34,6 @@ export default {
     },
   },
   methods: {
-    updateSelectedEl() {
-      console.log("updateSelectedEl");
-      let { id, name } = this.$store.state.activeComponent;
-      console.log(id);
-      if (!id) return;
-      this.$nextTick(() => {
-        let el = document.querySelector(`#viewport [data-id="${id}"]`);
-        if (!el) return;
-        let target = el.getBoundingClientRect();
-        this.$store.commit("COMPONENTS_ACTIVE", {
-          id,
-          name,
-          style: {
-            width: target.width + "px",
-            height: target.height + "px",
-            left: target.left - 200 + "px",
-            top: target.top + window.pageYOffset - 83 + "px",
-          },
-        });
-      });
-    },
-    handlerView(e) {
-      let componentNode = this.getComponentNode(e.target);
-      if (componentNode) {
-        let target = componentNode.getBoundingClientRect();
-        this.$store.commit("COMPONENTS_ACTIVE", {
-          id: componentNode.dataset.id,
-          name: componentNode.dataset.name,
-          style: {
-            width: target.width + "px",
-            height: target.height + "px",
-            left: target.left + "px",
-            top: target.top + window.pageYOffset + "px",
-          },
-        });
-      }
-    },
-    getComponentNode(node) {
-      while (node.id !== "viewport" && !node.dataset.id) {
-        node = node.parentNode;
-      }
-      return node.id == "viewport" ? "" : node;
-    },
     splitCode() {
       const script = parseVue(this.code, "script").replace(
         /export default/,
@@ -90,6 +47,9 @@ export default {
       this.css = style;
       this.html = template;
     },
+    handlerView(e) {
+      this.$store.dispatch("SET_COMPONENTS_ACTIVE", e.target);
+    },
     renderCode() {
       this.splitCode();
 
@@ -100,6 +60,7 @@ export default {
         const Component = Vue.extend(parseStrToFunc);
         this.component = new Component().$mount();
         //console.log(this.component)
+        //new Component().$mount('#app')
 
         //渲染样式
         if (this.css !== "") {
@@ -109,6 +70,9 @@ export default {
           style.innerHTML = this.css;
           document.getElementsByTagName("head")[0].appendChild(style);
         }
+        /* document.addEventListener('click', e => {
+          this.$store.dispatch("SET_COMPONENTS_ACTIVE", e.target);
+        })*/
         this.$refs.display.appendChild(this.component.$el);
       }
     },

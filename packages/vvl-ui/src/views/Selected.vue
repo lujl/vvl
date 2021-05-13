@@ -2,8 +2,13 @@
   <div class="vl-selected" :style="activeComponentStyle">
     <div class="vl-selected__mask"></div>
     <div class="vl-selected__actions">
-      <div class="vl-selected__el">{{activeComponent.name}}</div>
+      <div class="vl-selected__el">{{ activeComponent.name }}</div>
       <div class="vl-selected__inner">
+        <i
+          class="el-icon-top-left"
+          @click="handleActions('select-parent-node')"
+          title="选中父级组件"
+        ></i>
         <i
           class="el-icon-top"
           @click="handleActions('up')"
@@ -30,7 +35,7 @@
 </template>
 <script>
 import { mapState } from "vuex";
-import { deepClone, each, getUID } from "@/utils/index.js";
+import { deepClone, each, getUID, getIframeNodeById } from "@/utils/index.js";
 
 export default {
   name: "Selected",
@@ -77,17 +82,17 @@ export default {
           } else if (item.children) {
             handleFind(item.children, id);
           }
-          /*if (args && args(item)) {
-            target = item
-            break
-          } else if (item.children) {
-            target = find(item.children, args)
-          }*/
         }
       }
-      handleFind(data, this.activeComponent.id);
-      this.$store.commit("COMPONENTS_UPDATE", data);
-      this.$store.commit("COMPONENTS_ACTIVE", {});
+      //选择父节点
+      if (action == "select-parent-node") {
+        let currentNode = getIframeNodeById(this.activeComponent.id);
+        this.$store.dispatch("SET_COMPONENTS_ACTIVE", currentNode.parentNode);
+      } else {
+        handleFind(data, this.activeComponent.id);
+        this.$store.commit("COMPONENTS_UPDATE", data);
+        this.$store.commit("COMPONENTS_ACTIVE", {});
+      }
     },
   },
 };

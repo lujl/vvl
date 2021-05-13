@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import { find, deepClone } from "@/utils/index.js";
-import { broadcast, transfer } from 'vuex-iframe-sync'
+import { find, deepClone, getComponentNode } from "@/utils/index.js";
+import { broadcast, transfer } from "vuex-iframe-sync";
 
 Vue.use(Vuex);
 
@@ -19,14 +19,15 @@ export default new Vuex.Store({
     },
     COMPONENTS_ACTIVE(state, value) {
       if (!value.attrs && value.id) {
-        //let target = find(state.componentData, value.id)
         let componentData = deepClone(state.componentData);
-        let target = find(componentData, function (item) {
+        let target = find(componentData, (item) => {
           return item.id == value.id;
         });
-        value.attrs = { ...target.attrs };
+        console.log("COMPONENTS_ACTIVE window:", window === window.top, target);
+        if (target) {
+          value.attrs = { ...target.attrs };
+        }
       }
-      console.log("COMPONENTS_ACTIVE", value);
       state.activeComponent = value;
     },
     COMPONENTS_UPDATE(state, value) {
@@ -43,12 +44,23 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    /*setComponentsActive ({ commit }, value) {
-      commit(COMPONENTS_ACTIVE, value)
-    },*/
+    SET_COMPONENTS_ACTIVE({ commit }, node) {
+      let componentNode = getComponentNode(node);
+      if (componentNode) {
+        let target = componentNode.getBoundingClientRect();
+        commit("COMPONENTS_ACTIVE", {
+          id: componentNode.dataset.id,
+          name: componentNode.dataset.name,
+          style: {
+            width: target.width + "px",
+            height: target.height + "px",
+            left: target.left + "px",
+            top: target.top + window.pageYOffset + "px",
+          },
+        });
+      }
+    },
   },
   modules: {},
-  plugins: [
-    window === window.top ? broadcast('viewport-iframe') : transfer()
-  ]
+  plugins: [window === window.top ? broadcast("viewport-iframe") : transfer()],
 });
