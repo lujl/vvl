@@ -23,7 +23,12 @@ export default new Vuex.Store({
         let target = find(componentData, (item) => {
           return item.id == value.id;
         });
-        console.log("COMPONENTS_ACTIVE window:", window === window.top, target);
+        console.log(
+          "COMPONENTS_ACTIVE window:",
+          window === window.top,
+          componentData,
+          target
+        );
         if (target) {
           value.attrs = { ...target.attrs };
         }

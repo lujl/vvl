@@ -155,16 +155,16 @@ export function merge(obj = {}, obj2) {
 
 //export function get(object, path, defaultValue = undefined) {}
 
+let target;
 export function find(arr, args, children = "children") {
   if (!isArray(arr)) return;
-  let target;
   for (let i = 0; i < arr.length; i++) {
     let item = arr[i];
     if (args && args(item)) {
       target = item;
       break;
     } else if (item[children]) {
-      target = find(item[children], args, children);
+      find(item[children], args, children);
     }
   }
   return target;

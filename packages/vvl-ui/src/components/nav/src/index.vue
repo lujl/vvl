@@ -8,7 +8,6 @@
           @click="onFullScreen"
           title="全屏"
         ></i>
-        <i class="vl-nav__icon el-icon-download" title="下载"></i>
       </div>
     </div>
   </nav>
@@ -57,7 +56,6 @@ export default {
     }
     .vl-nav__fn {
       margin-left: auto;
-      margin-right: auto;
       .vl-nav__icon {
         margin: 0 5px;
       }

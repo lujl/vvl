@@ -122,14 +122,13 @@ export default {
       if (isObject(target[item.key])) {
         target[item.key].value = item.value;
       } else {
-        console.log(target[item.key]);
         // 如果赋值前为数字类型则转为数字类型
         target[item.key] = isNumber(target[item.key])
           ? Number(item.value)
           : item.value;
       }
 
-      console.log(item, target, newArr);
+      console.log("change", item, target, newArr);
 
       this.$store.commit("COMPONENTS_UPDATE", newArr);
     },

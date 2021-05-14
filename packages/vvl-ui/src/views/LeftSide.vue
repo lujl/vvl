@@ -7,7 +7,7 @@
       <div class="panel__main">
         <el-tabs v-model="activeName">
           <el-tab-pane label="组件" name="component">
-            <ul>
+            <ul class="panel_ul">
               <li
                 v-for="(item, index) in componetsList"
                 :key="index"
@@ -24,7 +24,7 @@
     </div>
 
     <h3>结构层级</h3>
-    <ComponentTree />
+    <ComponentTree style="height: 50vh; overflow-y: auto" />
   </vl-side>
 </template>
 <script>
@@ -68,6 +68,10 @@ ul li {
   .panel__main {
     padding-bottom: 10px;
     border-bottom: 1px solid #dee2e6;
+    .panel_ul {
+      height: 100px;
+      overflow-y: auto;
+    }
   }
 }
 </style>
