@@ -1,6 +1,6 @@
 <template>
   <div class="main" :class="{ toggle }">
-    <iframe src="/#/viewport" class="main__iframe" id="viewport-iframe"></iframe>
+    <iframe :src="iframePath" class="main__iframe" id="viewport-iframe"></iframe>
 
     <CodeEditor :toggle.sync="toggle" />
 
@@ -10,12 +10,18 @@
 <script>
 import CodeEditor from "./CodeEditor.vue";
 import Selected from "./Selected.vue";
+const config = require("/vue.config.js")
 
 export default {
   name: "Main",
   components: {
     CodeEditor,
     Selected,
+  },
+  computed: {
+    iframePath() {
+      return `${config.publicPath}#/viewport`
+    },
   },
   data() {
     return {
