@@ -1,6 +1,6 @@
 <template>
   <div class="main" :class="{ toggle }">
-    <iframe src="/viewport" class="main__iframe" id="viewport-iframe"></iframe>
+    <iframe src="/#/viewport" class="main__iframe" id="viewport-iframe"></iframe>
 
     <CodeEditor :toggle.sync="toggle" />
 
