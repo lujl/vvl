@@ -3,13 +3,13 @@
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
 
-快速生成vue代码的页面可视化搭建工具，用于解决页面生成效率问题.
+快速生成vue代码的页面可视化搭建工具，用于解决页面生成效率问题.  
+预览地址: https://lujl.github.io/vvl/
 
 ## 关于
 
 - [安装](#安装)
 - [功能特点](#功能特点)
-- [实现](#实现)
 
 ## 安装
 
@@ -33,4 +33,4 @@ $ npm run serve
 
 ## License
 
-[MIT](LICENSE) © lujl
+[MIT](LICENSE)
